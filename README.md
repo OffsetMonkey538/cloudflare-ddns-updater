@@ -22,10 +22,9 @@ Go to your [Cloudflare Dashboard](https://dash.cloudflare.com), select your doma
 Here you need to create 2 DNS records for the same (sub)domain, one for IPv4 (Type A) and one for IPv6 (Type AAAA).  
 Create them with the correct name, other settings will be filled by the script. For the address you can temporarily use `1.2.3.4` for IPv4 and `1:2:3:4:5:6:7:8` for IPv6.
 
-###### TODO: Make it list only the wanted records based on DOMAIN defined above  
 Now that the records are created, you need to get their ids.  
-To do this, you can run the script like this: `LIST_RECORDS=true ./run.sh`, which will list all your DNS records instead of updating anything.  
-From there, find the records you want and copy their `"id"` fields into the `.env` file.
+To do this, you can run the script like this: `LIST_RECORDS=true ./run.sh`, which will print the `A` and `AAAA` record ids for the `DOMAIN` you defined before.  
+From there, copy the values into the `.env` file.
 ### TTL
 The time-to-live of the records, in seconds. The default of 300 seconds (5 min) should be fine, but you can increase or decrease this if you plan on running the script at a different interval.
 

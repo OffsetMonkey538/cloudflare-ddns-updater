@@ -30,7 +30,9 @@ load_env
 
 # If enabled, list records and exit
 if [ "$LIST_RECORDS" = true ]; then
-  eval "$LIST_RECORDS_COMMAND" | jq .
+  ALL_RECORDS=$(eval "$LIST_RECORDS_COMMAND")
+  echo "IPv4 record id: $(echo "$ALL_RECORDS" | jq '.result[] | select(.name=="'"$DOMAIN"'" and .type=="A") | .id')"
+  echo "IPv6 record id: $(echo "$ALL_RECORDS" | jq '.result[] | select(.name=="'"$DOMAIN"'" and .type=="AAAA") | .id')"
   exit
 fi
 
