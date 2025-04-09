@@ -30,8 +30,8 @@ From there, find the records you want and copy their `"id"` fields into the `.en
 The time-to-live of the records, in seconds. The default of 300 seconds (5 min) should be fine, but you can increase or decrease this if you plan on running the script at a different interval.
 
 ## Running the script
-You can set up cron to run the script. Just run the `crontab -e` command and paste in the following (and use the actual path):
+You can set up cron to run the script. Just run the `crontab -e` command and paste in the following:
 ```cronexp
-*/5 * * * * /path/to/run.sh
+*/5 * * * * cd /path/to/cloudflare-ddns-updater && ./run.sh
 ```
-This will run the script every five minutes. 
+This will run the script every five minutes. It first has to cd into the directory as otherwise the script wouldn't be able to access the `.env` file.
