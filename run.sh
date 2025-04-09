@@ -31,7 +31,7 @@ UPDATE_DNS_COMMAND="curl -s -X PUT \"https://api.cloudflare.com/client/v4/zones/
     \\\"content\\\": \\\"\$ACTUAL_IP\\\",
     \\\"ttl\\\": \$TTL,
     \\\"proxied\\\": false,
-    \\\"comment\\\": \\\"Automatically updated on \$(date '+%Y-%m-%d_%H-%M-%S') using [INSERT LINK]\\\"
+    \\\"comment\\\": \\\"Automatically updated on \$(date '+%Y-%m-%d_%H-%M-%S')\\\"
   }\""
 GET_RECORD_COMMAND="curl -s \"https://api.cloudflare.com/client/v4/zones/\$ZONE_ID/dns_records/\$RECORD_ID\" \
   -H \"Authorization: Bearer \$API_TOKEN\" \
