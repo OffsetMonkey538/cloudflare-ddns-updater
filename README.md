@@ -1,24 +1,4 @@
 # Cloudflare DDNS Updater
-This script will keep the IPv4 and IPv6 addresses of
-loudFlare DNS entries up to date with the current public
-IP addresses of the computer it is run on.
-
-It uses the CloudFlare api and the jq command for checking the IP address
-currently set for the wanted domain and compares it with
-the results from the ipify.org api (https://api4.ipify.org and https://api6.ipify.org)
-
-If the IP addresses don't match, it will send an api request
-to the CloudFlare api to change the two records for the new addresses.
-
-
-To get the record ids for the domain records, you can uncomment the
-following line and run the script, which will ask the CloudFlare api
-for a list of all DNS records on the specified domain. It'll then
-feed that into a jq command that beautifies it so you can
-easily find the correct record id.
-Note: API_TOKEN and ZONE_ID must already be defined!
-LIST_RECORDS=true
-
 This script will keep the IPv4 and IPv6 addresses of Cloudflare DNS entries up to date with the current public IP address of the computer it is run on.
 
 It uses the Cloudflare api and `jq` command for checking the IP address currently set for the DNS records and compares them with results from the [ipify.org](https://www.ipify.org/) api (https://api.ipify.org and https://api6.ipify.org)
