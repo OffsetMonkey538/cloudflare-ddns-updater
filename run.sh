@@ -1,27 +1,5 @@
 #!/bin/sh
 
-###
-###  This script will keep the IPv4 and IPv6 addresses of
-###  CloudFlare DNS entries up to date with the current public
-###  IP addresses of the computer it is run on.
-###
-###  It uses the CloudFlare api and the jq command for checking the IP address
-###  currently set for the wanted domain and compares it with
-###  the results from the ipify.org api (https://api4.ipify.org and https://api6.ipify.org)
-###
-###  If the IP addresses don't match, it will send an api request
-###  to the CloudFlare api to change the two records for the new addresses.
-###
-###
-###  To get the record ids for the domain records, you can uncomment the
-###  following line and run the script, which will ask the CloudFlare api
-###  for a list of all DNS records on the specified domain. It'll then
-###  feed that into a jq command that beautifies it so you can
-###  easily find the correct record id.
-###  Note: API_TOKEN and ZONE_ID must already be defined!
-###  LIST_RECORDS=true
-###
-
 UPDATE_DNS_COMMAND="curl -s -X PUT \"https://api.cloudflare.com/client/v4/zones/\$ZONE_ID/dns_records/\$RECORD_ID\" \
   -H \"Authorization: Bearer \$API_TOKEN\" \
   -H \"Content-Type: application/json\" \
@@ -61,7 +39,7 @@ CURRENT_IPV4=$(RECORD_ID=$RECORD_ID_4 eval "$GET_RECORD_COMMAND | jq '.result.co
 CURRENT_IPV6=$(RECORD_ID=$RECORD_ID_6 eval "$GET_RECORD_COMMAND | jq '.result.content' | tail -c +2 | head -c -2") # Json has quotes around the value so remove
 
 # Get actual addresses of the computer
-ACTUAL_IPV4=$(curl -s https://api4.ipify.org)
+ACTUAL_IPV4=$(curl -s https://api.ipify.org)
 ACTUAL_IPV6=$(curl -s https://api6.ipify.org)
 
 
