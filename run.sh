@@ -37,15 +37,15 @@ if [ "$LIST_RECORDS" = true ]; then
 fi
 
 # Get current addresses for the domain
-CURRENT_IPV4=$(RECORD_ID=$RECORD_ID_4 eval "$GET_RECORD_COMMAND | jq '.result.content' | tail -c +2 | head -c -2") # Json has quotes around the value so remove
-CURRENT_IPV6=$(RECORD_ID=$RECORD_ID_6 eval "$GET_RECORD_COMMAND | jq '.result.content' | tail -c +2 | head -c -2") # Json has quotes around the value so remove
+if [ "$RECORD_ID_4" != "" ]; then CURRENT_IPV4=$(RECORD_ID=$RECORD_ID_4 eval "$GET_RECORD_COMMAND | jq '.result.content' | tail -c +2 | head -c -2"); fi # Json has quotes around the value so remove
+if [ "$RECORD_ID_6" != "" ]; then CURRENT_IPV6=$(RECORD_ID=$RECORD_ID_6 eval "$GET_RECORD_COMMAND | jq '.result.content' | tail -c +2 | head -c -2"); fi # Json has quotes around the value so remove
 
 # Get actual addresses of the computer
-ACTUAL_IPV4=$(curl -s https://api.ipify.org)
-ACTUAL_IPV6=$(curl -s https://api6.ipify.org)
+if [ "$RECORD_ID_4" != "" ]; then ACTUAL_IPV4=$(curl -s https://api.ipify.org); fi
+if [ "$RECORD_ID_6" != "" ]; then ACTUAL_IPV6=$(curl -s https://api6.ipify.org); fi
 
 
-if [ "$CURRENT_IPV4" != "$ACTUAL_IPV4" ]; then
+if [ "$RECORD_ID_4" != "" ] && [ "$CURRENT_IPV4" != "$ACTUAL_IPV4" ]; then
   echo "IPv4 Address changed from $CURRENT_IPV4 to $ACTUAL_IPV4! Updating..."
   ## All spellchecks below: variables are used when evaluating the update command defined at the top.
   # shellcheck disable=SC2034
@@ -60,7 +60,7 @@ if [ "$CURRENT_IPV4" != "$ACTUAL_IPV4" ]; then
   echo
   echo
 fi
-if [ "$CURRENT_IPV6" != "$ACTUAL_IPV6" ]; then
+if [ "$RECORD_ID_6" != "" ] && [ "$CURRENT_IPV6" != "$ACTUAL_IPV6" ]; then
   echo "IPv6 Address changed from $CURRENT_IPV6 to $ACTUAL_IPV6! Updating..."
   ## All spellchecks below: variables are used when evaluating the update command defined at the top.
   # shellcheck disable=SC2034
